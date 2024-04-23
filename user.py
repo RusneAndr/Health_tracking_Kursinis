@@ -1,4 +1,6 @@
-#Person.py
+#user.py
+#User class and its subclasses
+
 import csv
 
 class User:

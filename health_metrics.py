@@ -1,4 +1,6 @@
 #health_metrics.py
+#HealthMetrics class for calculating bmi
+
 import csv
 
 class HealthMetrics:

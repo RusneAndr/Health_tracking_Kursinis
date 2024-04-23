@@ -1,5 +1,5 @@
 #user_factory.py
-#User Factory
+#UserFactory class responsible for creating user objects
 
 from user import New_user, Already_user
 

@@ -1,7 +1,10 @@
 #step_logger.py
+#StepLogger class for logging steps
+
 import matplotlib.pyplot as plt
 from datetime import datetime
 import csv
+import os
 
 class StepLogger:
     def __init__(self, user):
@@ -35,21 +38,32 @@ class StepLogger:
 
     def view_step_log(self):
         file_path = f"{self.user.name}_steps.csv"
+        data_file_path = f"{self.user.name}_data.csv"
         dates, steps = [], []
         try:
+            if os.path.exists(data_file_path):
+                with open(data_file_path, mode='r', newline='') as data_file:
+                    reader = csv.DictReader(data_file)
+                    for row in reader:
+                        step_target = int(row.get('Step Target', 0))  # Get step target from the first row
+                        break  # Stop after reading the first row
+            
+            # Read step log
             with open(file_path, mode='r', newline='') as file:
                 reader = csv.reader(file)
                 for row in reader:
                     dates.append(row[0])
                     steps.append(int(row[1]))
 
-            plt.figure(figsize=(10, 5))
-            plt.plot(dates, steps, marker='o', linestyle='-', color='b')
+            plt.figure(figsize=(15, 8))
+            plt.plot(dates, steps, marker='o', linestyle='-', color='b') # Blue line for daily steps
             plt.title(f'Step Log for {self.user.name}')
             plt.xlabel('Date')
             plt.ylabel('Steps')
-            plt.xticks(rotation=45)
-            plt.axhline(y=self.user.step_target, color='r', linestyle='--', label=f"Target: {self.user.step_target} steps")
+            plt.xticks(rotation=90)
+            plt.axhline(y=step_target, color='r', linestyle='--', label=f"Step Target: {step_target} steps") # Red dashed line for step target
+            plt.legend(fontsize='large')
+            plt.grid(True)
             plt.tight_layout()
             plt.show()
 
@@ -57,3 +71,4 @@ class StepLogger:
             print("No step log found.")
         except ValueError:
             print("Error in log file format. Please ensure it contains valid dates and step counts.")
+    
