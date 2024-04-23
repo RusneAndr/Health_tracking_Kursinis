@@ -4,10 +4,22 @@ from health_metrics import HealthMetrics
 from step_logger import StepLogger
 import pwinput
 import os
+import time
+
+# Decorator design patter to calculate the duration of the session
+def log_session_duration(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        duration_minutes = (end_time - start_time) / 60
+        print(f"User session duration: {duration_minutes:.2f} minutes")
+        return result
+    return wrapper
 
 def main_menu():
     while True:
-        print("\nWelcome to the User Management System")
+        print("\nWelcome to the Health Tracking User Management System")
         print("1. Create New Account")
         print("2. Login")
         print("3. Exit")
@@ -52,6 +64,7 @@ def login():
     if user.authenticate():
         user_menu(user)
 
+@log_session_duration
 def user_menu(user):
     while True:
         print("\nUser Menu")
