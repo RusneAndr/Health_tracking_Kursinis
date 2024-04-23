@@ -2,6 +2,8 @@
 from user_factory import UserFactory
 from health_metrics import HealthMetrics
 from step_logger import StepLogger
+import pwinput
+import os
 
 def main_menu():
     while True:
@@ -19,37 +21,36 @@ def main_menu():
             print("Thank you for using our system.")
             break
         else:
-            print("Invalid choice. Please choose from 1, 2, or 3.")
+            print("Invalid choice. Please choose from 1, 2 or 3.")
 
 def create_account():
-    name = input("Enter your name: ")
+    name = input("Enter your user name: ")
+    if os.path.exists(f"{name}_data.csv"):
+        print("Username already exists. Please choose a different username.")
+        return
     while True:
         try:
             age = int(input("Enter your age: "))
             weight_kg = float(input("Enter your weight in kg: "))
             height_m = float(input("Enter your height in meters: "))
             step_target = int(input("Enter your daily step target: "))
+            password = pwinput.pwinput(prompt="Enter your password: ", mask="*")
             break
         except ValueError:
             print("Invalid input! Please enter numeric values.")
-    password = input("Enter your password: ")
 
     # Creating a new user using the UserFactory
     new_user = UserFactory.get_user("new", name, age, weight_kg, height_m, password, step_target)
     new_user.create_account()
-    print("Your account has been created successfully.")
 
 def login():
     name = input("Enter your name: ")
-    password = input("Enter your password: ")
-
+    password = pwinput.pwinput(prompt="Enter your password: ", mask="*")
+   
     # Creating an existing user using the UserFactory
     user = UserFactory.get_user("existing", name, None, None, None, password)
     if user.authenticate():
-        print("Login successful! Welcome back.")
         user_menu(user)
-    else:
-        print("Login failed! Please check your credentials and try again.")
 
 def user_menu(user):
     while True:
@@ -103,14 +104,6 @@ def update_account(user):
             break
         except ValueError:
             print("Invalid input! Please enter numeric values for age, weight, height, and optionally step target.")
-
-def update_step_target(user):
-    try:
-        new_step_target = int(input("Enter your new daily step target: "))
-        user.update_details(user.age, user.weight_kg, user.height_m, new_step_target)
-        print(f"Step target updated successfully to {new_step_target} steps.")
-    except ValueError:
-        print("Invalid input! Please enter a numeric value.")
 
 def main():
     main_menu()

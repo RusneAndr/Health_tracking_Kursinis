@@ -1,7 +1,7 @@
 #user_factory.py
 #User Factory
 
-from Person import New_user, Already_user
+from user import New_user, Already_user
 
 class UserFactory:
     @staticmethod
