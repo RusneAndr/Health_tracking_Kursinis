@@ -1,10 +1,11 @@
 #step_logger.py
 #StepLogger class for logging steps
 
-import matplotlib.pyplot as plt
 from datetime import datetime
 import csv
 import os
+
+import matplotlib.pyplot as plt
 
 class StepLogger:
     def __init__(self, user):

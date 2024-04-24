@@ -1,10 +1,10 @@
 #main.py
+import os
+import time
+import pwinput
 from user_factory import UserFactory
 from health_metrics import HealthMetrics
 from step_logger import StepLogger
-import pwinput
-import os
-import time
 
 # Decorator design patter to calculate the duration of the session
 def log_session_duration(func):
@@ -66,7 +66,13 @@ def login():
 
 @log_session_duration
 def user_menu(user):
+    start_time = time.time()
     while True:
+        if time.time() - start_time > 60:
+            confirm = input("You have been logged on for 5 min. Do you want to continue? (yes/no): ").lower()
+            if confirm == 'no':
+                break
+
         print("\nUser Menu")
         print("1. View Account Details")
         print("2. Update Account")
