@@ -56,12 +56,12 @@ class StepLogger:
                     dates.append(row[0])
                     steps.append(int(row[1]))
 
-            plt.figure(figsize=(15, 8))
+            plt.figure(figsize=(10, 5))
             plt.plot(dates, steps, marker='o', linestyle='-', color='b') # Blue line for daily steps
             plt.title(f'Step Log for {self.user.name}')
             plt.xlabel('Date')
             plt.ylabel('Steps')
-            plt.xticks(rotation=90)
+            plt.xticks(rotation=45)
             plt.axhline(y=step_target, color='r', linestyle='--', label=f"Step Target: {step_target} steps") # Red dashed line for step target
             plt.legend(fontsize='large')
             plt.grid(True)
