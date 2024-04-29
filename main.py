@@ -36,7 +36,7 @@ def main_menu():
             print("Invalid choice. Please choose from 1, 2 or 3.")
 
 def create_account():
-    name = input("Enter your user name: ")
+    name = input("Enter your user username: ")
     if os.path.exists(f"{name}_data.csv"):
         print("Username already exists. Please choose a different username.")
         return
@@ -56,7 +56,7 @@ def create_account():
     new_user.create_account()
 
 def login():
-    name = input("Enter your name: ")
+    name = input("Enter your username: ")
     password = pwinput.pwinput(prompt="Enter your password: ", mask="*")
    
     # Creating an existing user using the UserFactory
@@ -66,13 +66,8 @@ def login():
 
 @log_session_duration
 def user_menu(user):
-    start_time = time.time()
-    while True:
-        if time.time() - start_time > 60:
-            confirm = input("You have been logged on for 5 min. Do you want to continue? (yes/no): ").lower()
-            if confirm == 'no':
-                break
 
+    while True:
         print("\nUser Menu")
         print("1. View Account Details")
         print("2. Update Account")
