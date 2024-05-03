@@ -21,7 +21,7 @@ class User:
             with open(file_path, mode='r', newline='') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    print(f"Username: {row['Name']}")
+                    print(f"Name: {row['Name']}")
                     print(f"Age: {row['Age']}")
                     print(f"Weight: {row['Weight (kg)']} kg")
                     print(f"Height: {row['Height (m)']} m")
@@ -40,7 +40,7 @@ class User:
     def save_to_file(self, file_path):
         with open(file_path, mode='w', newline='') as file:
             writer = csv.writer(file)
-            headers = ['Userame', 'Age', 'Weight (kg)', 'Height (m)', 'Password', 'Step Target']
+            headers = ['Name', 'Age', 'Weight (kg)', 'Height (m)', 'Password', 'Step Target']
             writer.writerow(headers)
             user_data = [self.name, self.age, self.weight_kg, self.height_m, self.__password, self.step_target]
             writer.writerow(user_data)

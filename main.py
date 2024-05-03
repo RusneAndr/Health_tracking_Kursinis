@@ -36,7 +36,7 @@ def main_menu():
             print("Invalid choice. Please choose from 1, 2 or 3.")
 
 def create_account():
-    name = input("Enter your user username: ")
+    name = input("Enter your user name: ")
     if os.path.exists(f"{name}_data.csv"):
         print("Username already exists. Please choose a different username.")
         return
@@ -56,7 +56,7 @@ def create_account():
     new_user.create_account()
 
 def login():
-    name = input("Enter your username: ")
+    name = input("Enter your name: ")
     password = pwinput.pwinput(prompt="Enter your password: ", mask="*")
    
     # Creating an existing user using the UserFactory
@@ -66,8 +66,8 @@ def login():
 
 @log_session_duration
 def user_menu(user):
-
     while True:
+
         print("\nUser Menu")
         print("1. View Account Details")
         print("2. Update Account")
@@ -82,6 +82,9 @@ def user_menu(user):
             user.view_account_details()
         elif choice == '2':
             update_account(user)
+            confirm = input("Do you want to see you account details? (yes/no): ").lower()
+            if confirm == 'yes':
+                user.view_account_details()
         elif choice == '3':
             health_metrics = HealthMetrics(user)
             bmi_result = health_metrics.calculate_bmi()
