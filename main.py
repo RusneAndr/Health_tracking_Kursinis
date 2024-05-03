@@ -19,7 +19,7 @@ def log_session_duration(func):
 
 def main_menu():
     while True:
-        print("\nWelcome to the Health Tracking User Management System")
+        print("\nWelcome to the Health Tracking System")
         print("1. Create New Account")
         print("2. Login")
         print("3. Exit")
